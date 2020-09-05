@@ -20,7 +20,7 @@ jobs:
     - name: Build docker image
       run: |
         docker build -f ${{ github.workspace }}/Dockerfile -t dotnet-core-api:${{ github.sha }} .
-    - name: Build, Tag, Push
+    - name: Tag, Push
       uses: mattdavis0351/actions/docker-gpr@v1
       with:
         repo-token: ${{ secrets.PAT }}
