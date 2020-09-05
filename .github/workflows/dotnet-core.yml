@@ -20,9 +20,8 @@ jobs:
     - name: Build docker image
       run: |
         docker build -f ${{ github.workspace }}/Dockerfile -t dotnet-core-api:${{ github.sha }} .
-    - name: Build and Publish Tag Docker image
-      uses: VaultVulp/gp-docker-action@1.1.7
+    - name: Build, Tag, Push
+      uses: mattdavis0351/actions/docker-gpr@v1
       with:
-          image-name: dotnet-core-api:${{ github.sha }}
-          build-context: ${{ github.workspace }}/Dockerfile
-          github-token: ${{ secrets.PAT }} 
+        repo-token: ${{ secrets.PAT }}
+        image-name: dotnet-core-api:${{ github.sha }}
