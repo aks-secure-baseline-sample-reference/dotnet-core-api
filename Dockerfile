@@ -7,10 +7,10 @@ EXPOSE 80
 FROM mcr.microsoft.com/dotnet/core/sdk:3.1-buster AS build
 WORKDIR /src
 WORKDIR "/src/dotnet-core-api"
-RUN dotnet build "TodoApi.csproj" -c Release -o /app/build
+RUN dotnet build "dotnet-core-api/TodoApi.csproj" -c Release -o /app/build
 
 FROM build AS publish
-RUN dotnet publish "TodoApi.csproj" -c Release -o /app/publish
+RUN dotnet publish "dotnet-core-api/TodoApi.csproj" -c Release -o /app/publish
 
 FROM base AS final
 WORKDIR /app
