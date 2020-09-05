@@ -6,11 +6,18 @@ EXPOSE 80
 
 FROM mcr.microsoft.com/dotnet/core/sdk:3.1-buster AS build
 
-RUN dotnet restore 
-RUN dotnet build -c Release -o /app/build
+WORKDIR /src
+COPY ["dotnet-core-api/TodoApi.csproj", "dotnet-core-api/"]
+RUN dotnet restore "dotnet-core-api/TodoApi.csproj"
+
+WORKDIR "/src/dotnet-core-api"
+
+RUN dotnet restore "dotnet-core-api/TodoApi.csproj"
+
+RUN dotnet build "TodoApi.csproj" -c Release -o /app/build
 
 FROM build AS publish
-RUN dotnet publish -c Release -o /app/publish
+RUN dotnet publish "TodoApi.csproj" -c Release -o /app/publish
 
 FROM base AS final
 WORKDIR /app
