@@ -13,13 +13,14 @@ jobs:
     steps:
     - uses: actions/checkout@main
     - uses: actions/setup-dotnet@v1
+      with:
+       dotnet-version: '3.1.x' # SDK Version to use; x will use the latest version of the 3.1 channel
     - run: dotnet build "TodoApi.csproj"
     - run: dotnet publish --configuration Release "TodoApi.csproj" 
     - run: |
-        docker build -f Dockerfile -t dotnet-core-api:${{ github.sha }} .
+        docker build -f Dockerfile -t "dotnet-core-api":${{ github.sha }} .
     - uses: mattdavis0351/actions/docker-gpr@v1
       with:
-        dotnet-version: '3.1.x' # SDK Version to use; x will use the latest version of the 3.1 channel
         repo-token: ${{ secrets.PAT }}
         image-name: dotnet-core-api:${{ github.sha }}
 
