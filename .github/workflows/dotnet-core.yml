@@ -13,11 +13,14 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
-    - name: Setup .NET Core
-      uses: actions/setup-dotnet@v1
+    - name: Build docker image
+      run: |
+        docker build -f ${{ github.workspace }}/dockerfile -t dotnet-core-api:${{ github.sha }} .
+    - name: Scan container image
+      uses: mr-smithers-excellent/docker-build-push@v3
       with:
-        dotnet-version: 3.1.301
-    - name: Install dependencies
-      run: dotnet restore
-    - name: Build
-      run: dotnet build --configuration Release --no-restore
+        image: dotnet-core-api:${{ github.sha }}
+        registry: docker.pkg.github.com
+        githubOrg: override-org # optional
+        username: ${{ github.actor }}
+        password: ${{ secrets.PAT }} 
