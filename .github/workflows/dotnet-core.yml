@@ -15,7 +15,7 @@ jobs:
     - uses: actions/checkout@v2
     - name: Build docker image
       run: |
-        docker build -f ${{ github.workspace }}/dockerfile -t dotnet-core-api:${{ github.sha }} .
+        docker build -f ${{ github.workspace }}/Dockerfile -t dotnet-core-api:${{ github.sha }} .
     - name: Scan container image
       uses: mr-smithers-excellent/docker-build-push@v3
       with:
