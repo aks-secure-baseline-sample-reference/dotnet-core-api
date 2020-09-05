@@ -23,8 +23,6 @@ jobs:
     - name: Build and Publish Tag Docker image
       uses: VaultVulp/gp-docker-action@1.1.7
       with:
-          image: dotnet-core-api:${{ github.sha }}
-          registry: docker.pkg.github.com
-          githubOrg: override-org # optional
-          username: ${{ github.actor }}
-          password: ${{ secrets.PAT }} 
+          image-name: dotnet-core-api:${{ github.sha }}
+          build-context: ${{ github.workspace }}/Dockerfile
+          github-token: ${{ secrets.PAT }} 
