@@ -6,7 +6,7 @@ EXPOSE 80
 
 FROM mcr.microsoft.com/dotnet/core/sdk:3.1-buster AS build
 WORKDIR /src
-COPY ["dotnet-core-api/TodoApi.csproj", "dotnet-core-api/"]
+COPY "dotnet-core-api/TodoApi.csproj", "dotnet-core-api/"
 RUN dotnet restore "dotnet-core-api/TodoApi.csproj"
 COPY . .
 WORKDIR "/src/dotnet-core-api"
