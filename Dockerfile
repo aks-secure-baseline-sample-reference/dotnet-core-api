@@ -4,18 +4,7 @@ FROM mcr.microsoft.com/dotnet/core/aspnet:3.1-buster-slim AS base
 WORKDIR /app
 EXPOSE 80
 
-FROM mcr.microsoft.com/dotnet/core/sdk:3.1-buster AS build
-WORKDIR /src
-COPY "dotnet-core-api/TodoApi.csproj", "dotnet-core-api/"
-RUN dotnet restore "dotnet-core-api/TodoApi.csproj"
-COPY . .
-WORKDIR "/src/dotnet-core-api"
-RUN dotnet build "TodoApi.csproj" -c Release -o /app/build
-
-FROM build AS publish
-RUN dotnet publish "TodoApi.csproj" -c Release -o /app/publish
-
 FROM base AS final
 WORKDIR /app
-COPY --from=publish /app/publish .
+COPY /home/runner/work/dotnet-core-api/dotnet-core-api/bin/Debug/netcoreapp3.1/TodoApi.dll /app/publish .
 ENTRYPOINT ["dotnet", "TodoApi.dll"]
