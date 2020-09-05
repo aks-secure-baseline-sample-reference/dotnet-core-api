@@ -13,12 +13,7 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
-    - name: Build docker image
-      run: |
-        docker build -f ${{ github.workspace }}/Dockerfile -t dotnet-core-api:${{ github.sha }} .
-        with:
-          image: dotnet-core-api:${{ github.sha }}
-          registry: docker.pkg.github.com
-          githubOrg: override-org # optional
-          username: ${{ github.actor }}
-          password: ${{ secrets.PAT }} 
+    - uses: actions/setup-dotnet@v1
+    - run: dotnet build "TodoApi.csproj"
+    - name: Create the package
+    - run: dotnet pack --configuration Release "TodoApi.csproj"
